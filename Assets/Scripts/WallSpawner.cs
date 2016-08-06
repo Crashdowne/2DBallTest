@@ -12,7 +12,7 @@ public class WallSpawner : MonoBehaviour
     public Button HorzButton;
     public Button VertButton;
 
-    private bool wallDoneGrowing = false;
+    private bool wallDoneGrowing = true;
     private bool IsHorizontal = true;
 
     // Use this for initialization
@@ -39,7 +39,7 @@ public class WallSpawner : MonoBehaviour
                     leftBar.GetComponent<Renderer>().bounds.size.magnitude, topBar.GetComponent<Renderer>().bounds.size.magnitude) == true)
                 {
                     SpawnWall(point);
-                    wallDoneGrowing = false;
+                    wallDoneGrowing = true;
                 }
                 
             }
@@ -62,7 +62,7 @@ public class WallSpawner : MonoBehaviour
             rotation = Quaternion.Euler(0, 0, 90);
         }
             Instantiate(prefab, point, rotation);
-        wallDoneGrowing = true;
+            wallDoneGrowing = true;
     }
 
     public bool IsInsidePlayArea(Vector3 point, Vector3 origin, float h, float w)

@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: f6ef2e0b57b2de84793f209652240f25
-timeCreated: 1467923597
+timeCreated: 1470513085
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - prefab: {instanceID: 0}
+  - topBar: {instanceID: 0}
+  - leftBar: {instanceID: 0}
+  - HorzButton: {instanceID: 0}
+  - VertButton: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
