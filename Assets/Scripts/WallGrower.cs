@@ -7,6 +7,9 @@ public class WallGrower : MonoBehaviour {
     public int GrowDirection = 1;
     public float GrowSpeed = 0.01f;
 
+    private bool RightWallColl = false;
+    private bool LeftWallColl = false;
+
     public GameObject square;
 
     //TODO make work
@@ -26,9 +29,13 @@ public class WallGrower : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        RightWallyerHit(coll);
+        LeftWallyerHit(coll);
+
         // Needs to be if both Left & Right Wallyer have hit object "Bar"
         // Find brother is messing the intersection up
-        if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
+        //if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
+        if(LeftWallColl && RightWallColl)
         {
             IsGrowing = false;
             SpawnTestAreas();
@@ -105,5 +112,31 @@ public class WallGrower : MonoBehaviour {
     public GameObject FindChild(GameObject parent, string name)
     {
         return parent.transform.Find(name).gameObject;
+    }
+
+    // Detect if Right Wallyer has hit a bar
+
+    public void RightWallyerHit(Collision2D coll)
+    {
+        if (coll.gameObject.name.Contains("Right Bar") && coll.gameObject != FindBrother())
+        {
+            RightWallColl = true;
+            Debug.Log("Right Hit Detected");
+        }
+
+        //RightBarHitWall = false;
+    }
+
+    //// Detect if Left Wallyer has hit a bar
+
+    public void LeftWallyerHit(Collision2D coll)
+    {
+        if (coll.gameObject.name.Contains("Left Bar") && coll.gameObject != FindBrother())
+        {
+            LeftWallColl = true;
+            Debug.Log("Left Hit Detected");
+        }
+
+        //RightBarHitWall = false;
     }
 }

@@ -24,6 +24,7 @@ public class WallSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Don't really need to detect right click anymore
         if (Input.GetButtonDown("Fire2"))
         {
             ToggleRotation();
