@@ -2,13 +2,10 @@
 using System.Collections;
 
 public class WallGrower : MonoBehaviour {
-    private bool IsGrowing = true;
+    public bool IsGrowing = true;
 
     public int GrowDirection = 1;
     public float GrowSpeed = 0.01f;
-
-    private bool RightWallColl = false;
-    private bool LeftWallColl = false;
 
     public GameObject square;
 
@@ -29,16 +26,24 @@ public class WallGrower : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        RightWallyerHit(coll);
-        LeftWallyerHit(coll);
+        //RightWallyerHit(coll);
+        //LeftWallyerHit(coll);
 
         // Needs to be if both Left & Right Wallyer have hit object "Bar"
         // Find brother is messing the intersection up
-        //if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
-        if(LeftWallColl && RightWallColl)
+
+        // If we hit the outside box or
+        //    we hit a wall and we didnt hit the other spawned wall
+        if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
         {
             IsGrowing = false;
-            SpawnTestAreas();
+            var bro = FindBrother();
+            var broScript = bro.GetComponent<WallGrower>();
+            // If we are done growing and our brother is done growing
+            if (!broScript.IsGrowing)
+            {
+                SpawnTestAreas();
+            }
         }
 
         if (IsGrowing && coll.gameObject.name.Contains("Ball"))
@@ -112,31 +117,5 @@ public class WallGrower : MonoBehaviour {
     public GameObject FindChild(GameObject parent, string name)
     {
         return parent.transform.Find(name).gameObject;
-    }
-
-    // Detect if Right Wallyer has hit a bar
-
-    public void RightWallyerHit(Collision2D coll)
-    {
-        if (coll.gameObject.name.Contains("Right Bar") && coll.gameObject != FindBrother())
-        {
-            RightWallColl = true;
-            Debug.Log("Right Hit Detected");
-        }
-
-        //RightBarHitWall = false;
-    }
-
-    //// Detect if Left Wallyer has hit a bar
-
-    public void LeftWallyerHit(Collision2D coll)
-    {
-        if (coll.gameObject.name.Contains("Left Bar") && coll.gameObject != FindBrother())
-        {
-            LeftWallColl = true;
-            Debug.Log("Left Hit Detected");
-        }
-
-        //RightBarHitWall = false;
     }
 }
