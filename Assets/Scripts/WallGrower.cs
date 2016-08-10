@@ -9,6 +9,8 @@ public class WallGrower : MonoBehaviour {
 
     public GameObject square;
 
+    public Material blackMaterial;
+
     //TODO make work
     public bool IsHorizontal { get { return this.transform.parent.localRotation.z == 0; } }
 
@@ -26,12 +28,6 @@ public class WallGrower : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        //RightWallyerHit(coll);
-        //LeftWallyerHit(coll);
-
-        // Needs to be if both Left & Right Wallyer have hit object "Bar"
-        // Find brother is messing the intersection up
-
         // If we hit the outside box or
         //    we hit a wall and we didnt hit the other spawned wall
         if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
@@ -51,7 +47,9 @@ public class WallGrower : MonoBehaviour {
             var gameState = GameObject.Find(@"/GameState");
             var gameStateScript = gameState.GetComponent<GameState>();
             gameStateScript.RemoveLife();
+            //Both walls are destroyed
             GameObject.Destroy(this.gameObject);
+            GameObject.Destroy(this.FindBrother());
         }
     }
 
@@ -63,6 +61,7 @@ public class WallGrower : MonoBehaviour {
         var width = topBar.GetComponent<Renderer>().bounds.size.magnitude;
         var height = leftBar.GetComponent<Renderer>().bounds.size.magnitude;
         var point = this.transform.position;
+
         if (IsHorizontal)
         {
             Vector3 origin2 = new Vector3(origin.x, point.y, 0.0f);
@@ -79,6 +78,7 @@ public class WallGrower : MonoBehaviour {
 
             GameObject spawnedSquare2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
             spawnedSquare2.transform.localScale = new Vector3(w2, h2, 1);
+
         }
         // IsVertical
         else
