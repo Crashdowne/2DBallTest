@@ -15,21 +15,14 @@ public class WallSpawner : MonoBehaviour
     private bool wallDoneGrowing = true;
     private bool IsHorizontal = true;
 
-    // Use this for initialization
     void Start()
     {
-        //rotationText.text = "Rotation = Horizontal";
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Don't really need to detect right click anymore
-        if (Input.GetButtonDown("Fire2"))
-        {
-            ToggleRotation();
-        }
-
         if (Input.GetButtonDown("Fire1"))
         {
             if (wallDoneGrowing)
@@ -66,11 +59,12 @@ public class WallSpawner : MonoBehaviour
             wallDoneGrowing = true;
     }
 
+    // Updated play area to be inside the bars, not the outisde
     public bool IsInsidePlayArea(Vector3 point, Vector3 origin, float h, float w)
     {
-        if (point.x >= origin.x && point.x <= w + origin.x)
+        if (point.x >= (origin.x + 0.25) && point.x <= w + (origin.x - 0.25))
         {
-            if (point.y <= origin.y && point.y >= -h + origin.y)
+            if ((point.y + 0.25) <= origin.y && point.y >= -h + (origin.y - 0.25))
             {
                 return true;
             }

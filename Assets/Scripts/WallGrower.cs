@@ -22,12 +22,15 @@ public class WallGrower : MonoBehaviour {
 	void Update () {
         if(IsGrowing)
         {
+            // if left or right wallyer hits a bar, do not spawn that wallyer, but I have no collision available...
             transform.localScale += new Vector3(GrowDirection * GrowSpeed, 0f, 0f);
         }
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        // Or here? If, on spawn, one of the Wallyers hits a Bar, despawn that wall
+
         // If we hit the outside box or
         //    we hit a wall and we didnt hit the other spawned wall
         if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))

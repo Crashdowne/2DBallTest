@@ -9,19 +9,16 @@ public class BallSpawner : MonoBehaviour {
     // Allows us to manually set the # of balls in the Ball Spawner in the editor
     public int numOfBalls;
     
-
     // Sets up the variables for displaying the text # of balls
     private int count = 0;
     public Text countText;
 
-    // Creates a new "prefab" object of type GameObjest
+    // Creates a new "prefab" object of type GameObjest   
     public GameObject prefab;
-
 
     // Use this for initialization
     void Start ()
     {
-
         // Spawns the # of balls for the # that was entered by the user
         for (int i = 1; i <= numOfBalls; i++)
         {
