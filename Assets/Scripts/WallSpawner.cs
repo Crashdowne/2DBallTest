@@ -34,6 +34,13 @@ public class WallSpawner : MonoBehaviour
                 {
                     SpawnWall(point);
                     wallDoneGrowing = true;
+
+                    //if (!OnTopOfWallyer(point))
+                    //{
+                    //    SpawnWall(point);
+                    //    wallDoneGrowing = true;
+                    //}
+                    
                 }
                 
             }
@@ -92,4 +99,9 @@ public class WallSpawner : MonoBehaviour
             //rotationText.text = "Rotation = Horizontal";
         }
     }
+
+    //public bool OnTopOfWallyer(Vector3 point)
+    //{
+        
+    //}
 }
