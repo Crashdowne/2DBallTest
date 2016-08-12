@@ -10,6 +10,7 @@ public class GameState : MonoBehaviour {
 
     private int currentLives;
 
+    public static bool noLives = false;
 
 	// Use this for initialization
 	void Start ()
@@ -23,8 +24,7 @@ public class GameState : MonoBehaviour {
     {
         if (currentLives == 0)
         {
-            //SceneManager.LoadScene("Menu");
-            Time.timeScale = 0;
+            noLives = true;
         }
 	
 	}

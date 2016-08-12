@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System;
 
 public class WallSpawner : MonoBehaviour
@@ -11,40 +11,38 @@ public class WallSpawner : MonoBehaviour
     public GameObject leftBar;
     public Button HorzButton;
     public Button VertButton;
+    public Text percentCoveredText;
 
-    private bool wallDoneGrowing = true;
+    private double percentCovered = 0.0;
     private bool IsHorizontal = true;
+
+    public static float totalArea;
 
     void Start()
     {
-
+        percentCoveredText.text = "Covered: " + percentCovered + "%";
+        totalArea = topBar.GetComponent<Renderer>().bounds.size.magnitude * leftBar.GetComponent<Renderer>().bounds.size.magnitude;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // There's probably a better place for this...
+        percentCovered = Math.Round((VoidArea.coveredArea / totalArea) * 100);
+        percentCoveredText.text = "Covered: " + percentCovered + "%";
+
         if (Input.GetButtonDown("Fire1"))
         {
-            if (wallDoneGrowing)
+            if (!WallGrower.IsGrowingSpawnerCheck && GameState.noLives == false)
             {
                 var point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 point.z = 0;
                 if (IsInsidePlayArea(point, new Vector3(topBar.GetComponent<Renderer>().bounds.min.x, leftBar.GetComponent<Renderer>().bounds.max.y, 0.0f), 
                     leftBar.GetComponent<Renderer>().bounds.size.magnitude, topBar.GetComponent<Renderer>().bounds.size.magnitude) == true)
                 {
-                    SpawnWall(point);
-                    wallDoneGrowing = true;
-
-                    //if (!OnTopOfWallyer(point))
-                    //{
-                    //    SpawnWall(point);
-                    //    wallDoneGrowing = true;
-                    //}
-                    
-                }
-                
-            }
-            
+                    SpawnWall(point);   
+                }               
+            }            
         }
     }
 
@@ -62,16 +60,15 @@ public class WallSpawner : MonoBehaviour
             // Sets vertical rotation
             rotation = Quaternion.Euler(0, 0, 90);
         }
-            Instantiate(prefab, point, rotation);
-            wallDoneGrowing = true;
+        Instantiate(prefab, point, rotation); 
     }
 
     // Updated play area to be inside the bars, not the outisde
     public bool IsInsidePlayArea(Vector3 point, Vector3 origin, float h, float w)
     {
-        if (point.x >= (origin.x + 0.25) && point.x <= w + (origin.x - 0.25))
+        if (point.x >= (origin.x + 0.30) && point.x <= w + (origin.x - 0.30))
         {
-            if ((point.y + 0.25) <= origin.y && point.y >= -h + (origin.y - 0.25))
+            if ((point.y) <= (origin.y - 0.10) && point.y >= -h + (origin.y + 0.10))
             {
                 return true;
             }
@@ -87,7 +84,6 @@ public class WallSpawner : MonoBehaviour
             IsHorizontal = false;
             HorzButton.gameObject.SetActive(false);
             VertButton.gameObject.SetActive(true);
-            //rotationText.text = "Rotation = Vertical";
         }
         else
         {
@@ -96,12 +92,6 @@ public class WallSpawner : MonoBehaviour
             
             VertButton.gameObject.SetActive(false);
             HorzButton.gameObject.SetActive(true);
-            //rotationText.text = "Rotation = Horizontal";
         }
     }
-
-    //public bool OnTopOfWallyer(Vector3 point)
-    //{
-        
-    //}
 }

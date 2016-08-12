@@ -3,13 +3,12 @@ using System.Collections;
 
 public class WallGrower : MonoBehaviour {
     public bool IsGrowing = true;
+    public static bool IsGrowingSpawnerCheck = false;
 
     public int GrowDirection = 1;
     public float GrowSpeed = 0.01f;
 
     public GameObject square;
-
-    public Material blackMaterial;
 
     //TODO make work
     public bool IsHorizontal { get { return this.transform.parent.localRotation.z == 0; } }
@@ -24,6 +23,7 @@ public class WallGrower : MonoBehaviour {
         {
             // if left or right wallyer hits a bar, do not spawn that wallyer, but I have no collision available...
             transform.localScale += new Vector3(GrowDirection * GrowSpeed, 0f, 0f);
+            IsGrowingSpawnerCheck = true;
         }
     }
 
@@ -36,6 +36,7 @@ public class WallGrower : MonoBehaviour {
         if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
         {
             IsGrowing = false;
+            IsGrowingSpawnerCheck = false;
             var bro = FindBrother();
             var broScript = bro.GetComponent<WallGrower>();
             // If we are done growing and our brother is done growing
@@ -47,12 +48,13 @@ public class WallGrower : MonoBehaviour {
 
         if (IsGrowing && coll.gameObject.name.Contains("Ball"))
         {
+            IsGrowingSpawnerCheck = false;
             var gameState = GameObject.Find(@"/GameState");
             var gameStateScript = gameState.GetComponent<GameState>();
             gameStateScript.RemoveLife();
             //Both walls are destroyed
             GameObject.Destroy(this.gameObject);
-            GameObject.Destroy(this.FindBrother());
+            GameObject.Destroy(this.FindBrother());           
         }
     }
 
@@ -76,11 +78,11 @@ public class WallGrower : MonoBehaviour {
             Vector3 center = new Vector3(origin.x + w1 / 2, origin.y - h1 / 2, 0.0f);
             Vector3 center2 = new Vector3(origin2.x + w2 / 2, origin2.y - h2 / 2, 0.0f);
 
-            GameObject spawnedSquare = Instantiate(square, center, Quaternion.identity) as GameObject;
-            spawnedSquare.transform.localScale = new Vector3(w1, h1, 1);
+            GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
+            testArea1.transform.localScale = new Vector3(w1, h1, 1);
 
-            GameObject spawnedSquare2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
-            spawnedSquare2.transform.localScale = new Vector3(w2, h2, 1);
+            GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
+            testArea2.transform.localScale = new Vector3(w2, h2, 1);
 
         }
         // IsVertical
@@ -95,11 +97,11 @@ public class WallGrower : MonoBehaviour {
             Vector3 center = new Vector3(origin.x + w1 / 2, origin.y - h1 / 2, 0.0f);
             Vector3 center2 = new Vector3(origin2.x + w2 / 2, origin2.y - h2 / 2, 0.0f);
 
-            GameObject spawnedSquare = Instantiate(square, center, Quaternion.identity) as GameObject;
-            spawnedSquare.transform.localScale = new Vector3(w1, h1, 1);
+            GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
+            testArea1.transform.localScale = new Vector3(w1, h1, 1);
 
-            GameObject spawnedSquare2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
-            spawnedSquare2.transform.localScale = new Vector3(w2, h2, 1);
+            GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
+            testArea2.transform.localScale = new Vector3(w2, h2, 1);
         }
     }
 
