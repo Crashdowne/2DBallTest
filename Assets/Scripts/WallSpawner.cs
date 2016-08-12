@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-//using System.Diagnostics;
 using System;
 
 public class WallSpawner : MonoBehaviour
