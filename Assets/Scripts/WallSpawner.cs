@@ -11,23 +11,23 @@ public class WallSpawner : MonoBehaviour
     public Button HorzButton;
     public Button VertButton;
     public Text percentCoveredText;
-
     private double percentCovered = 0.0;
     private bool IsHorizontal = true;
 
-    public static float totalArea;
+    //GameObject Top = GameObject.Find("Top Bar");
+    //GameObject Bottom = GameObject.Find("Bottom Bar");
+    //GameObject Left = GameObject.Find("Left Bar");
+    //GameObject Right = GameObject.Find("Right Bar");
 
     void Start()
     {
-        percentCoveredText.text = "Covered: " + percentCovered + "%";
-        totalArea = topBar.GetComponent<Renderer>().bounds.size.magnitude * leftBar.GetComponent<Renderer>().bounds.size.magnitude;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        // There's probably a better place for this...
-        percentCovered = Math.Round((VoidArea.coveredArea / totalArea) * 100);
+        // Needs to be changed to reflect new calculation of play area coverage
         percentCoveredText.text = "Covered: " + percentCovered + "%";
 
         if (Input.GetButtonDown("Fire1"))
@@ -36,10 +36,12 @@ public class WallSpawner : MonoBehaviour
             {
                 var point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 point.z = 0;
-                if (IsInsidePlayArea(point, new Vector3(topBar.GetComponent<Renderer>().bounds.min.x, leftBar.GetComponent<Renderer>().bounds.max.y, 0.0f), 
-                    leftBar.GetComponent<Renderer>().bounds.size.magnitude, topBar.GetComponent<Renderer>().bounds.size.magnitude) == true)
+                if (IsInsidePlayArea(point, new Vector3(topBar.GetComponent<Renderer>().bounds.min.x, 
+                    leftBar.GetComponent<Renderer>().bounds.max.y, 0.0f),
+                    leftBar.GetComponent<Renderer>().bounds.size.magnitude, 
+                    topBar.GetComponent<Renderer>().bounds.size.magnitude) == true)
                 {
-                    SpawnWall(point);   
+                    SpawnWall(point);
                 }               
             }            
         }
@@ -59,7 +61,7 @@ public class WallSpawner : MonoBehaviour
             // Sets vertical rotation
             rotation = Quaternion.Euler(0, 0, 90);
         }
-        Instantiate(prefab, point, rotation); 
+        Instantiate(prefab, point, rotation);
     }
 
     // Updated play area to be inside the bars, not the outisde

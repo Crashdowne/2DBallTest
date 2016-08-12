@@ -4,6 +4,8 @@ using System.Collections;
 public class VoidArea : MonoBehaviour {
     ulong updateCount = 0;
     public static double coveredArea = 0.0;
+    public static float newWallY;
+    public static float newWallX;
 
     public Material blackMaterial;
     // Use this for initialization
@@ -17,7 +19,8 @@ public class VoidArea : MonoBehaviour {
         if(updateCount == 5) 
         {
             gameObject.GetComponent<Renderer>().material = blackMaterial;
-            coveredArea += (gameObject.GetComponent<Renderer>().bounds.size.x * gameObject.GetComponent<Renderer>().bounds.size.y);
+            newWallY = gameObject.GetComponent<Renderer>().bounds.size.y;
+            newWallX = gameObject.GetComponent<Renderer>().bounds.size.x;
         }
         updateCount += 1;
     }

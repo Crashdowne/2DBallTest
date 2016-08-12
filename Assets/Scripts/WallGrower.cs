@@ -21,7 +21,6 @@ public class WallGrower : MonoBehaviour {
 	void Update () {
         if(IsGrowing)
         {
-            // if left or right wallyer hits a bar, do not spawn that wallyer, but I have no collision available...
             transform.localScale += new Vector3(GrowDirection * GrowSpeed, 0f, 0f);
             IsGrowingSpawnerCheck = true;
         }
@@ -54,7 +53,7 @@ public class WallGrower : MonoBehaviour {
             gameStateScript.RemoveLife();
             //Both walls are destroyed
             GameObject.Destroy(this.gameObject);
-            GameObject.Destroy(this.FindBrother());           
+            GameObject.Destroy(this.FindBrother());
         }
     }
 
