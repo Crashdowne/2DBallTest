@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+// Attached to Ball Prefabs
 public class SimpleForce : MonoBehaviour {
 
     // Lets us set how much force (continuous 'push') we apply in the editor (up and right)

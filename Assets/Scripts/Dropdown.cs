@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
+
+// Depreciated
 public class Dropdown : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 

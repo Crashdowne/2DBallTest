@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+// Attached to Right & LeftWallyer
 public class WallGrower : MonoBehaviour {
     public bool IsGrowing = true;
-    public static bool IsGrowingSpawnerCheck = false;
-
     public int GrowDirection = 1;
     public float GrowSpeed = 0.01f;
 
@@ -22,7 +22,7 @@ public class WallGrower : MonoBehaviour {
         if(IsGrowing)
         {
             transform.localScale += new Vector3(GrowDirection * GrowSpeed, 0f, 0f);
-            IsGrowingSpawnerCheck = true;
+            //IsGrowingSpawnerCheck = true;
         }
     }
 
@@ -35,7 +35,6 @@ public class WallGrower : MonoBehaviour {
         if (coll.gameObject.name.Contains("Bar") || (coll.gameObject.name.Contains("Wallyer") && coll.gameObject != FindBrother()))
         {
             IsGrowing = false;
-            IsGrowingSpawnerCheck = false;
             var bro = FindBrother();
             var broScript = bro.GetComponent<WallGrower>();
             // If we are done growing and our brother is done growing
@@ -47,7 +46,6 @@ public class WallGrower : MonoBehaviour {
 
         if (IsGrowing && coll.gameObject.name.Contains("Ball"))
         {
-            IsGrowingSpawnerCheck = false;
             var gameState = GameObject.Find(@"/GameState");
             var gameStateScript = gameState.GetComponent<GameState>();
             gameStateScript.RemoveLife();
@@ -79,9 +77,13 @@ public class WallGrower : MonoBehaviour {
 
             GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
             testArea1.transform.localScale = new Vector3(w1, h1, 1);
+            testArea1.GetComponent<VoidArea>().isTop = true;
+            testArea1.GetComponent<VoidArea>().parent = this.gameObject;
 
             GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
             testArea2.transform.localScale = new Vector3(w2, h2, 1);
+            testArea2.GetComponent<VoidArea>().isBottom = true;
+            testArea2.GetComponent<VoidArea>().parent = this.gameObject;
 
         }
         // IsVertical
@@ -98,9 +100,13 @@ public class WallGrower : MonoBehaviour {
 
             GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
             testArea1.transform.localScale = new Vector3(w1, h1, 1);
+            testArea1.GetComponent<VoidArea>().isLeft = true;
+            testArea1.GetComponent<VoidArea>().parent = this.gameObject;
 
             GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
             testArea2.transform.localScale = new Vector3(w2, h2, 1);
+            testArea2.GetComponent<VoidArea>().isRight = true;
+            testArea2.GetComponent<VoidArea>().parent = this.gameObject;
         }
     }
 
@@ -108,18 +114,13 @@ public class WallGrower : MonoBehaviour {
     {
         if(name.Contains("Left"))
         {
-            return FindChild(this.transform.parent.gameObject, "Right Wallyer");
+            return Helpers.FindChild(this.transform.parent.gameObject, "Right Wallyer");
         }
         else if(name.Contains("Right"))
         {
-            return FindChild(this.transform.parent.gameObject, "Left Wallyer");
+            return this.transform.parent.gameObject.FindChild("Left Wallyer");
         }
 
         return null;
-    }
-
-    public GameObject FindChild(GameObject parent, string name)
-    {
-        return parent.transform.Find(name).gameObject;
     }
 }

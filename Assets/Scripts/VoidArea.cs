@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+// Attached to SquareTrigger (for testing where to load the wall
 public class VoidArea : MonoBehaviour {
     ulong updateCount = 0;
-    public static double coveredArea = 0.0;
-    public static float newWallY;
-    public static float newWallX;
+    public double coveredArea = 0.0;
+    public bool isLeft = false;
+    public bool isRight = false;
+    public bool isTop = false;
+    public bool isBottom = false;
+    public GameObject parent;
 
     public Material blackMaterial;
     // Use this for initialization
@@ -19,8 +24,23 @@ public class VoidArea : MonoBehaviour {
         if(updateCount == 5) 
         {
             gameObject.GetComponent<Renderer>().material = blackMaterial;
-            newWallY = gameObject.GetComponent<Renderer>().bounds.size.y;
-            newWallX = gameObject.GetComponent<Renderer>().bounds.size.x;
+
+            if (isBottom)
+            {
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.BottomBar = parent.FindChild("Wallyer");
+            }
+            else if (isTop)
+            {
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.TopBar = parent.FindChild("Wallyer");
+            }
+            else if (isLeft)
+            {
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.LeftBar = parent.FindChild("Wallyer");
+            }
+            else if (isRight)
+            {
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.RightBar = parent.FindChild("Wallyer");
+            }
         }
         updateCount += 1;
     }

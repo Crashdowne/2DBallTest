@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// Had to add the namespace for the UI stuffs
+
+
+// Attached to Scene
 using UnityEngine.UI;
 
 public class BallSpawner : MonoBehaviour {
@@ -22,8 +24,6 @@ public class BallSpawner : MonoBehaviour {
         // Spawns the # of balls for the # that was entered by the user
         for (int i = 1; i <= numOfBalls; i++)
         {
-            // From Unity docs, don't really know what's going on here
-            // I guess we define the prefab in the editor?
             Instantiate(prefab, new Vector3(Random.Range(-2,2), Random.Range(-2, 2), 0), Quaternion.identity);
         }
 
@@ -37,7 +37,7 @@ public class BallSpawner : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        // Only need to do stuff @ start
+
 	}
 
 
