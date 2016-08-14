@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 
 // Attached to Scene
@@ -9,6 +10,7 @@ public class GameState : MonoBehaviour {
 
     public int StartingLives = 3;
     public Text numLivesText;
+    public Text percentCovered;
     private int currentLives;
     public bool noLives = false;
     public GameObject PauseMenu;
@@ -36,7 +38,9 @@ public class GameState : MonoBehaviour {
             Time.timeScale = 0;
             GameOverMenu.gameObject.SetActive(true);
         }
-	
+
+        var wallSpawner = WallSpawner.GetCurrentWallSpawnerState();
+        percentCovered.text = "Covered: " + (100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100)).ToString();
 	}
 
     public void RemoveLife()

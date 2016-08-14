@@ -7,38 +7,60 @@ using System.Collections.Generic;
 
 public class PlayArea
 {
-    public GameObject TopBar;
-    public GameObject BottomBar;
-    public GameObject RightBar;
-    public GameObject LeftBar;
+    public Vector2 TopBar;
+    public Vector2 BottomBar;
+    public Vector2 RightBar;
+    public Vector2 LeftBar;
+
+    public Vector3 Origin { get { return new Vector3(LeftBar.x, TopBar.y, 0.0f); } }
+
+    public float Width { get { return RightBar.x - LeftBar.x; } }
+
+    public float Height { get { return TopBar.y - BottomBar.y; } }
 
     public PlayArea()
     {
-        TopBar = GameObject.Find("Top Bar");
-        BottomBar = GameObject.Find("Bottom Bar");
-        RightBar = GameObject.Find("Right Bar");
-        LeftBar = GameObject.Find("Left Bar");
+        var TopBarObj = GameObject.Find("Top Bar");
+        TopBar = new Vector2(TopBarObj.GetComponent<Renderer>().bounds.min.x, TopBarObj.GetComponent<Renderer>().bounds.min.y);
+        Debug.Log("New Top: " + TopBar.ToString());
+        var BottomBarObj = GameObject.Find("Bottom Bar");
+        BottomBar = new Vector2(BottomBarObj.GetComponent<Renderer>().bounds.min.x, BottomBarObj.GetComponent<Renderer>().bounds.min.y);
+        Debug.Log("New Bottom: " + BottomBar.ToString());
+        var RightBarObj = GameObject.Find("Right Bar");
+        RightBar = new Vector2(RightBarObj.GetComponent<Renderer>().bounds.min.x, RightBarObj.GetComponent<Renderer>().bounds.max.y);
+        Debug.Log("New Right: " + RightBar.ToString());
+        var LeftBarObj = GameObject.Find("Left Bar");
+        LeftBar = new Vector2(LeftBarObj.GetComponent<Renderer>().bounds.min.x, LeftBarObj.GetComponent<Renderer>().bounds.max.y);
+        Debug.Log("New Left: " + LeftBar.ToString());
     }
 
     public bool IsInsidePlayArea(Vector3 point)
     {
         return IsInsideSquare(
             point,
-            new Vector3(TopBar.GetComponent<Renderer>().bounds.min.x, LeftBar.GetComponent<Renderer>().bounds.max.y, 0.0f),
-            LeftBar.GetComponent<Renderer>().bounds.size.magnitude,
-            TopBar.GetComponent<Renderer>().bounds.size.magnitude);
+            Origin,
+            Width,
+            Height);
+    }
+
+    public float GetArea()
+    {
+        return Width * Height;
     }
 
     // Updated play area to be inside the bars, not the outisde
-    public bool IsInsideSquare(Vector3 point, Vector3 origin, float h, float w)
+    public bool IsInsideSquare(Vector3 point, Vector3 origin, float w, float h)
     {
+        Debug.Log(string.Format("Checking play area at point:{0}, defined by origin:{1} w:{2} h:{3}", point.ToString(), origin.ToString(), w, h));
         if (point.x >= (origin.x + 0.30) && point.x <= w + (origin.x - 0.30))
         {
             if ((point.y) <= (origin.y - 0.10) && point.y >= -h + (origin.y + 0.10))
             {
+                Debug.Log("inside");
                 return true;
             }
         }
+        Debug.Log("outside");
         return false;
     }
 }
@@ -50,6 +72,7 @@ public class WallSpawner : MonoBehaviour
     public Button HorzButton;
     public Button VertButton;
     public PlayArea PlayArea;
+    public PlayArea InitPlayArea;
     public Text percentCoveredText;
     private double percentCovered = 0.0;
     private bool IsHorizontal = true;
@@ -67,6 +90,7 @@ public class WallSpawner : MonoBehaviour
     void Start()
     {
         PlayArea = new PlayArea();
+        InitPlayArea = new PlayArea();
     }
 
     // Update is called once per frame

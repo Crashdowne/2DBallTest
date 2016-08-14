@@ -78,12 +78,26 @@ public class WallGrower : MonoBehaviour {
             GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
             testArea1.transform.localScale = new Vector3(w1, h1, 1);
             testArea1.GetComponent<VoidArea>().isTop = true;
-            testArea1.GetComponent<VoidArea>().parent = this.gameObject;
+            if (this.name.Contains("Left"))
+            {
+                testArea1.GetComponent<VoidArea>().parent = this.gameObject;
+            }
+            else
+            {
+                testArea1.GetComponent<VoidArea>().parent = FindBrother();
+            }
 
             GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
             testArea2.transform.localScale = new Vector3(w2, h2, 1);
             testArea2.GetComponent<VoidArea>().isBottom = true;
-            testArea2.GetComponent<VoidArea>().parent = this.gameObject;
+            if (this.name.Contains("Left"))
+            {
+                testArea2.GetComponent<VoidArea>().parent = this.gameObject;
+            }
+            else
+            {
+                testArea2.GetComponent<VoidArea>().parent = FindBrother();
+            }
 
         }
         // IsVertical
@@ -101,12 +115,26 @@ public class WallGrower : MonoBehaviour {
             GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
             testArea1.transform.localScale = new Vector3(w1, h1, 1);
             testArea1.GetComponent<VoidArea>().isLeft = true;
-            testArea1.GetComponent<VoidArea>().parent = this.gameObject;
+            if(this.name.Contains("Left"))
+            {
+                testArea1.GetComponent<VoidArea>().parent = FindBrother();
+            }
+            else
+            {
+                testArea1.GetComponent<VoidArea>().parent = this.gameObject;
+            }
 
             GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
             testArea2.transform.localScale = new Vector3(w2, h2, 1);
             testArea2.GetComponent<VoidArea>().isRight = true;
-            testArea2.GetComponent<VoidArea>().parent = this.gameObject;
+            if (this.name.Contains("Left"))
+            {
+                testArea2.GetComponent<VoidArea>().parent = FindBrother();
+            }
+            else
+            {
+                testArea2.GetComponent<VoidArea>().parent = this.gameObject;
+            }
         }
     }
 

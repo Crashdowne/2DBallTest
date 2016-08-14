@@ -27,19 +27,27 @@ public class VoidArea : MonoBehaviour {
 
             if (isBottom)
             {
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.BottomBar = parent.FindChild("Wallyer");
+                var wall = parent.FindChild("Wallyer");
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.BottomBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.min.y);
+                Debug.Log("New Bottom: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.BottomBar.ToString());
             }
             else if (isTop)
             {
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.TopBar = parent.FindChild("Wallyer");
+                var wall = parent.FindChild("Wallyer");
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.TopBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.min.y);
+                Debug.Log("New Top: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.TopBar.ToString());
             }
             else if (isLeft)
             {
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.LeftBar = parent.FindChild("Wallyer");
+                var wall = parent.FindChild("Wallyer");
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.LeftBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.max.y);
+                Debug.Log("New Left: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.LeftBar.ToString());
             }
             else if (isRight)
             {
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.RightBar = parent.FindChild("Wallyer");
+                var wall = parent.FindChild("Wallyer");
+                WallSpawner.GetCurrentWallSpawnerState().PlayArea.RightBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.max.y);
+                Debug.Log("New Right: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.RightBar.ToString());
             }
         }
         updateCount += 1;
