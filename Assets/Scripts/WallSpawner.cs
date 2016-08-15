@@ -12,9 +12,7 @@ public class PlayArea
     public Vector2 RightBar;
     public Vector2 LeftBar;
 
-    private float deadZone = 0.13f;
-
-    public Vector3 Origin { get { return new Vector3(LeftBar.x - deadZone, TopBar.y - deadZone, 0.0f); } }
+    public Vector3 Origin { get { return new Vector3(LeftBar.x, TopBar.y, 0.0f); } }
 
     public float Width { get { return RightBar.x - LeftBar.x; } }
 
@@ -23,16 +21,16 @@ public class PlayArea
     public PlayArea()
     {
         var TopBarObj = GameObject.Find("Top Bar");
-        TopBar = new Vector2(TopBarObj.GetComponent<Renderer>().bounds.min.x, TopBarObj.GetComponent<Renderer>().bounds.min.y);
+        TopBar = new Vector2(TopBarObj.GetComponent<Renderer>().bounds.min.x, (TopBarObj.GetComponent<Renderer>().bounds.min.y - 0.12f));
         Debug.Log("New Top: " + TopBar.ToString());
         var BottomBarObj = GameObject.Find("Bottom Bar");
-        BottomBar = new Vector2(BottomBarObj.GetComponent<Renderer>().bounds.min.x, BottomBarObj.GetComponent<Renderer>().bounds.min.y);
+        BottomBar = new Vector2(BottomBarObj.GetComponent<Renderer>().bounds.min.x, (BottomBarObj.GetComponent<Renderer>().bounds.min.y + 0.30f));
         Debug.Log("New Bottom: " + BottomBar.ToString());
         var RightBarObj = GameObject.Find("Right Bar");
-        RightBar = new Vector2(RightBarObj.GetComponent<Renderer>().bounds.min.x, RightBarObj.GetComponent<Renderer>().bounds.max.y);
+        RightBar = new Vector2(RightBarObj.GetComponent<Renderer>().bounds.min.x - 0.30f, RightBarObj.GetComponent<Renderer>().bounds.max.y);
         Debug.Log("New Right: " + RightBar.ToString());
         var LeftBarObj = GameObject.Find("Left Bar");
-        LeftBar = new Vector2(LeftBarObj.GetComponent<Renderer>().bounds.min.x, LeftBarObj.GetComponent<Renderer>().bounds.max.y);
+        LeftBar = new Vector2(LeftBarObj.GetComponent<Renderer>().bounds.min.x + 0.30f, LeftBarObj.GetComponent<Renderer>().bounds.max.y);
         Debug.Log("New Left: " + LeftBar.ToString());
     }
 
