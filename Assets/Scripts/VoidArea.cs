@@ -5,7 +5,6 @@ using System.Collections;
 // Attached to SquareTrigger (for testing where to load the wall
 public class VoidArea : MonoBehaviour {
     ulong updateCount = 0;
-    public double coveredArea = 0.0;
     public bool isLeft = false;
     public bool isRight = false;
     public bool isTop = false;

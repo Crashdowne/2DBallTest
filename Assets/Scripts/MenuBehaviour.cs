@@ -60,8 +60,12 @@ public class MenuBehaviour : MonoBehaviour
     public void Pause()
     {
         WallSpawner.GetCurrentWallSpawnerState().Pause = true;
-        PauseMenu.gameObject.SetActive(true);
-        Time.timeScale = 0;
+
+        if(WallSpawner.GetCurrentWallSpawnerState().Pause == true)
+        {
+            PauseMenu.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }   
     }
 
     public void NextLevel()

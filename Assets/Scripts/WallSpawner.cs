@@ -14,11 +14,11 @@ public class PlayArea
 
     private float deadZone = 0.13f;
 
-    public Vector3 Origin { get { return new Vector3(LeftBar.x + deadZone, TopBar.y - deadZone, 0.0f); } }
+    public Vector3 Origin { get { return new Vector3(LeftBar.x - deadZone, TopBar.y - deadZone, 0.0f); } }
 
-    public float Width { get { return RightBar.x - LeftBar.x - deadZone; } }
+    public float Width { get { return RightBar.x - LeftBar.x; } }
 
-    public float Height { get { return TopBar.y - BottomBar.y - deadZone; } }
+    public float Height { get { return TopBar.y - BottomBar.y; } }
 
     public PlayArea()
     {
@@ -56,7 +56,7 @@ public class PlayArea
         Debug.Log(string.Format("Checking play area at point:{0}, defined by origin:{1} w:{2} h:{3}", point.ToString(), origin.ToString(), w, h));
         if (point.x >= origin.x && point.x <= w + origin.x)
         {
-            if ((point.y) <= origin.y && point.y >= -h + origin.y)
+            if (point.y <= origin.y && point.y >= -h + origin.y)
             {
                 Debug.Log("inside");
                 return true;
@@ -75,19 +75,12 @@ public class WallSpawner : MonoBehaviour
     public Button VertButton;
     public PlayArea PlayArea;
     public PlayArea InitPlayArea;
-    public Text percentCoveredText;
-    private double percentCovered = 0.0;
     private bool IsHorizontal = true;
     public Button MenuButton;
     public Button RestartButton;
     public bool Pause = false;
 
     private List<GameObject> expandyerWallyList = new List<GameObject>();
-
-    //GameObject Top = GameObject.Find("Top Bar");
-    //GameObject Bottom = GameObject.Find("Bottom Bar");
-    //GameObject Left = GameObject.Find("Left Bar");
-    //GameObject Right = GameObject.Find("Right Bar");
 
     void Start()
     {
@@ -98,9 +91,6 @@ public class WallSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Needs to be changed to reflect new calculation of play area coverage
-        percentCoveredText.text = "Covered: " + percentCovered + "%";
-
         if (Input.GetButtonDown("Fire1"))
         {
             if (!isAnyWallyGrowing() && GameState.GetCurrentGameState().noLives == false && Pause == false)

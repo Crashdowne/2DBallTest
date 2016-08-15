@@ -37,10 +37,20 @@ public class GameState : MonoBehaviour {
             noLives = true;
             Time.timeScale = 0;
             GameOverMenu.gameObject.SetActive(true);
+            PauseMenu.gameObject.SetActive(false);
+            GameWonMenu.gameObject.SetActive(false);
         }
 
         var wallSpawner = WallSpawner.GetCurrentWallSpawnerState();
-        percentCovered.text = "Covered: " + (100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100)).ToString();
+        percentCovered.text = "Covered: " + (100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100)).ToString() + "%";
+        if ((100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100) >= 75.0))
+        {
+            Time.timeScale = 0;
+            WallSpawner.GetCurrentWallSpawnerState().Pause = true;
+            GameOverMenu.gameObject.SetActive(false);
+            PauseMenu.gameObject.SetActive(false);
+            GameWonMenu.gameObject.SetActive(true);
+        }
 	}
 
     public void RemoveLife()
