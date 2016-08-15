@@ -12,11 +12,13 @@ public class PlayArea
     public Vector2 RightBar;
     public Vector2 LeftBar;
 
-    public Vector3 Origin { get { return new Vector3(LeftBar.x, TopBar.y, 0.0f); } }
+    private float deadZone = 0.13f;
 
-    public float Width { get { return RightBar.x - LeftBar.x; } }
+    public Vector3 Origin { get { return new Vector3(LeftBar.x + deadZone, TopBar.y - deadZone, 0.0f); } }
 
-    public float Height { get { return TopBar.y - BottomBar.y; } }
+    public float Width { get { return RightBar.x - LeftBar.x - deadZone; } }
+
+    public float Height { get { return TopBar.y - BottomBar.y - deadZone; } }
 
     public PlayArea()
     {
@@ -52,9 +54,9 @@ public class PlayArea
     public bool IsInsideSquare(Vector3 point, Vector3 origin, float w, float h)
     {
         Debug.Log(string.Format("Checking play area at point:{0}, defined by origin:{1} w:{2} h:{3}", point.ToString(), origin.ToString(), w, h));
-        if (point.x >= (origin.x + 0.30) && point.x <= w + (origin.x - 0.30))
+        if (point.x >= origin.x && point.x <= w + origin.x)
         {
-            if ((point.y) <= (origin.y - 0.10) && point.y >= -h + (origin.y + 0.10))
+            if ((point.y) <= origin.y && point.y >= -h + origin.y)
             {
                 Debug.Log("inside");
                 return true;
