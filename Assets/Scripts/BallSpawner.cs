@@ -1,21 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-
-
-// Attached to Scene
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class BallSpawner : MonoBehaviour {
 
-    // Allows us to manually set the # of balls in the Ball Spawner in the editor
     public int numOfBalls;
-    
-    // Sets up the variables for displaying the text # of balls
     private int count = 0;
-    public Text countText;
-
-    // Creates a new "prefab" object of type GameObjest   
+    public Text countText; 
     public GameObject prefab;
 
     // Use this for initialization
@@ -38,7 +30,5 @@ public class BallSpawner : MonoBehaviour {
     void Update ()
     {
 
-	}
-
-
+    }
 }
