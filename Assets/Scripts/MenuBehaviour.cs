@@ -71,7 +71,6 @@ public class MenuBehaviour : MonoBehaviour
     public void NextLevel()
     {
         int scene = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log(scene);
         SceneManager.LoadScene(scene += 1);
     }
 }

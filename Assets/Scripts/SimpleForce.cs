@@ -8,33 +8,59 @@ public class SimpleForce : MonoBehaviour {
     // Lets us set how much force (continuous 'push') we apply in the editor (up and right)
     public float upForceAmnt;
     public float rightForceAmnt;
-
-    // Creats a new rigid body, so the ball can interact with things
     private Rigidbody2D rb;
+    private bool isMoving = false;
+    private int directionLR;
+    private int directionUD;
 
-    // So we know if the balls were already moving or not
-    bool isMoving = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
-        // ???
         rb = GetComponent<Rigidbody2D>();
-    }
-	
-	// Update is called once per frame
-	void Update () {
 
         // Apply force to the balls!
         if (isMoving == false)
         {
-            // Lets us give it angular force, otherwise it would just go up / down or left / right
-            rb.AddForce(transform.up * upForceAmnt);
-            rb.AddForce(transform.right * rightForceAmnt);
+            // 0 == Up, 1 == Down
+            directionUD = Random.Range(0, 2);
+            Debug.Log(directionUD);
+            // 0 == Left, 1 == Right
+            directionLR = Random.Range(0, 2);
+            Debug.Log(directionUD);
+
+            if (directionUD == 0 && directionLR == 0)
+            {
+                rb.AddForce(transform.up * upForceAmnt);
+                rb.AddForce((-transform.right) * rightForceAmnt);
+            }
+
+            else if (directionUD == 1 && directionLR == 0)
+            {
+                rb.AddForce((-transform.up) * upForceAmnt);
+                rb.AddForce((-transform.right) * rightForceAmnt);
+            }
+
+            else if (directionUD == 0 && directionLR == 1)
+            {
+                rb.AddForce(transform.up * upForceAmnt);
+                rb.AddForce(transform.right * rightForceAmnt);
+            }
+
+            else if (directionUD == 1 && directionLR == 1)
+            {
+                rb.AddForce((-transform.up) * upForceAmnt);
+                rb.AddForce(transform.right * rightForceAmnt);
+            }
 
             // We only want to apply the force once
             isMoving = true;
         }
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
         
     }
 }

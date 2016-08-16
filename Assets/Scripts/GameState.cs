@@ -11,12 +11,13 @@ public class GameState : MonoBehaviour {
     public int StartingLives = 3;
     public Text numLivesText;
     public Text percentCovered;
+    public Text levelNumberText;
     private int currentLives;
     public bool noLives = false;
     public GameObject PauseMenu;
     public GameObject GameOverMenu;
     public GameObject GameWonMenu;
-
+    
 
     // Use this for initialization
     void Start ()
@@ -26,6 +27,7 @@ public class GameState : MonoBehaviour {
         GameWonMenu.gameObject.SetActive(false);
         currentLives = StartingLives;
         numLivesText.text = "Lives: " + currentLives.ToString();
+        levelNumberText.text = "Level: " + SceneManager.GetActiveScene().buildIndex;
     }
 	
 	// Update is called once per frame
