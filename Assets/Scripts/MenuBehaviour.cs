@@ -15,7 +15,12 @@ public class MenuBehaviour : MonoBehaviour
     public void LoadGame(string sceneName)
     {
         // New way of loading scenes, Application.Load... is depreciated
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(sceneName);
+
+        // !! Working around a unity bug where they don't respect the new time scale
+        SceneManager.sceneLoaded += OnSceneLoadedEventHandler;
+        WallSpawner.GetCurrentWallSpawnerState().Pause = false;
     }
 
     // Function to quit the game (You can't quit the game in the editor, must be built and run

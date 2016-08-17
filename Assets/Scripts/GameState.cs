@@ -53,7 +53,7 @@ public class GameState : MonoBehaviour {
             PauseMenu.gameObject.SetActive(false);
             GameWonMenu.gameObject.SetActive(true);
         }
-	}
+    }
 
     public void RemoveLife()
     {

@@ -7,7 +7,6 @@ public class WallGrower : MonoBehaviour {
     public bool IsGrowing = true;
     public int GrowDirection = 1;
     public float GrowSpeed = 0.01f;
-
     public GameObject square;
 
     //TODO make work

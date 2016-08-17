@@ -22,7 +22,7 @@ public class VoidArea : MonoBehaviour {
         // Once updateCount == 5 changes the material --> Delayed Start
         if(updateCount == 5) 
         {
-            gameObject.GetComponent<Renderer>().material = blackMaterial;
+            gameObject.GetComponent<Renderer>().sharedMaterial = blackMaterial;
 
             if (isBottom)
             {

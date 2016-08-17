@@ -7,14 +7,13 @@ using UnityEngine.SceneManagement;
 public class BallSpawner : MonoBehaviour {
 
     public int numOfBalls;
-    private int count = 0;
+    private int count = 1;
     public Text countText; 
     public GameObject prefab;
     private int numOfBallsGenerated;
     private int randomQuadrent;
 
-    // Use this for initialization
-    void Start ()
+    void Awake()
     {
         numOfBallsGenerated = SceneManager.GetActiveScene().buildIndex;
         // Spawns the # of balls for the # that was entered by the user
@@ -31,19 +30,12 @@ public class BallSpawner : MonoBehaviour {
             {
                 Instantiate(prefab, new Vector3(Random.Range(-1, -4), Random.Range(-1, -4), 0), Quaternion.identity);
             }
-            
-        }
 
-        // Sets our count value to the # set by user
-        count = numOfBalls;
+            // Sets our count value to the # set by user
+            count = numOfBalls;
 
-        // Sets the text to be displayed
-         countText.text = "Balls: " + count.ToString();
-    }
-
-    // Update is called once per frame
-    void Update ()
-    {
-
+            // Sets the text to be displayed
+            countText.text = "Balls: " + count.ToString();
+        }       
     }
 }
