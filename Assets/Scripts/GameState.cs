@@ -6,7 +6,8 @@ using System;
 
 
 // Attached to Scene
-public class GameState : MonoBehaviour {
+public class GameState : MonoBehaviour
+{
 
     public int StartingLives = 3;
     public Text numLivesText;
@@ -17,10 +18,10 @@ public class GameState : MonoBehaviour {
     public GameObject PauseMenu;
     public GameObject GameOverMenu;
     public GameObject GameWonMenu;
-    
+
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         PauseMenu.gameObject.SetActive(false);
         GameOverMenu.gameObject.SetActive(false);
@@ -29,9 +30,9 @@ public class GameState : MonoBehaviour {
         numLivesText.text = "Lives: " + currentLives.ToString();
         levelNumberText.text = "Level: " + SceneManager.GetActiveScene().buildIndex;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         if (currentLives == 0)
         {
