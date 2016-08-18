@@ -56,8 +56,8 @@ public class WallGrower : MonoBehaviour {
 
     public void SpawnTestAreas()
     {
-        var topBar = GameObject.Find("Top Bar");
-        var leftBar = GameObject.Find("Left Bar");
+        var topBar = GameObject.FindGameObjectWithTag("TopBar");
+        var leftBar = GameObject.FindGameObjectWithTag("LeftBar");
         var origin = new Vector3(topBar.GetComponent<Renderer>().bounds.min.x, leftBar.GetComponent<Renderer>().bounds.max.y, 0.0f);
         var width = topBar.GetComponent<Renderer>().bounds.size.magnitude;
         var height = leftBar.GetComponent<Renderer>().bounds.size.magnitude;
