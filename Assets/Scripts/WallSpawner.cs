@@ -75,7 +75,6 @@ public class WallSpawner : MonoBehaviour
     public PlayArea InitPlayArea;
     private bool IsHorizontal = true;
     public Button MenuButton;
-    public Button RestartButton;
     public bool Pause = false;
 
     private List<GameObject> expandyerWallyList = new List<GameObject>();
