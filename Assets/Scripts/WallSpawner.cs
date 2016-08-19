@@ -22,16 +22,16 @@ public class PlayArea
     {
         var TopBarObj = GameObject.Find("Top Bar");
         TopBar = new Vector2(TopBarObj.GetComponent<Renderer>().bounds.min.x, (TopBarObj.GetComponent<Renderer>().bounds.min.y - 0.12f));
-        Debug.Log("New Top: " + TopBar.ToString());
+        //Debug.Log("New Top: " + TopBar.ToString());
         var BottomBarObj = GameObject.Find("Bottom Bar");
         BottomBar = new Vector2(BottomBarObj.GetComponent<Renderer>().bounds.min.x, (BottomBarObj.GetComponent<Renderer>().bounds.min.y + 0.30f));
-        Debug.Log("New Bottom: " + BottomBar.ToString());
+        //Debug.Log("New Bottom: " + BottomBar.ToString());
         var RightBarObj = GameObject.Find("Right Bar");
         RightBar = new Vector2(RightBarObj.GetComponent<Renderer>().bounds.min.x - 0.30f, RightBarObj.GetComponent<Renderer>().bounds.max.y);
-        Debug.Log("New Right: " + RightBar.ToString());
+        //Debug.Log("New Right: " + RightBar.ToString());
         var LeftBarObj = GameObject.Find("Left Bar");
         LeftBar = new Vector2(LeftBarObj.GetComponent<Renderer>().bounds.min.x + 0.30f, LeftBarObj.GetComponent<Renderer>().bounds.max.y);
-        Debug.Log("New Left: " + LeftBar.ToString());
+        //Debug.Log("New Left: " + LeftBar.ToString());
     }
 
     public bool IsInsidePlayArea(Vector3 point)
@@ -51,16 +51,16 @@ public class PlayArea
     // Updated play area to be inside the bars, not the outisde
     public bool IsInsideSquare(Vector3 point, Vector3 origin, float w, float h)
     {
-        Debug.Log(string.Format("Checking play area at point:{0}, defined by origin:{1} w:{2} h:{3}", point.ToString(), origin.ToString(), w, h));
+        //Debug.Log(string.Format("Checking play area at point:{0}, defined by origin:{1} w:{2} h:{3}", point.ToString(), origin.ToString(), w, h));
         if (point.x >= origin.x && point.x <= w + origin.x)
         {
             if (point.y <= origin.y && point.y >= -h + origin.y)
             {
-                Debug.Log("inside");
+                //Debug.Log("inside");
                 return true;
             }
         }
-        Debug.Log("outside");
+        //Debug.Log("outside");
         return false;
     }
 }

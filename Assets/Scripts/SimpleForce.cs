@@ -24,10 +24,10 @@ public class SimpleForce : MonoBehaviour {
         {
             // 0 == Up, 1 == Down
             directionUD = Random.Range(0, 2);
-            Debug.Log(directionUD);
+            //Debug.Log(directionUD);
             // 0 == Left, 1 == Right
             directionLR = Random.Range(0, 2);
-            Debug.Log(directionUD);
+            //Debug.Log(directionUD);
 
             if (directionUD == 0 && directionLR == 0)
             {
@@ -56,11 +56,5 @@ public class SimpleForce : MonoBehaviour {
             // We only want to apply the force once
             isMoving = true;
         }
-    }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        
     }
 }

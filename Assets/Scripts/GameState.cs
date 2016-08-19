@@ -18,7 +18,7 @@ public class GameState : MonoBehaviour
     public GameObject PauseMenu;
     public GameObject GameOverMenu;
     public GameObject GameWonMenu;
-
+    private double percentTotalCovered;
 
     // Use this for initialization
     void Start()
@@ -45,15 +45,14 @@ public class GameState : MonoBehaviour
         }
 
         var wallSpawner = WallSpawner.GetCurrentWallSpawnerState();
-        percentCovered.text = "Covered: " + (100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100)).ToString() + "%";
-        if ((100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100) >= 75.0))
+        percentTotalCovered = (100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100));
+        percentCovered.text = "Covered: " + percentTotalCovered.ToString() + "%";
+
+        if (percentTotalCovered >= 75.0)
         {
-            Time.timeScale = 0;
-            WallSpawner.GetCurrentWallSpawnerState().Pause = true;
-            GameOverMenu.gameObject.SetActive(false);
-            PauseMenu.gameObject.SetActive(false);
-            GameWonMenu.gameObject.SetActive(true);
+            OnWin();
         }
+
     }
 
     public void RemoveLife()
@@ -65,5 +64,14 @@ public class GameState : MonoBehaviour
     public static GameState GetCurrentGameState()
     {
         return GameObject.Find("GameState").GetComponent<GameState>();
+    }
+
+    public void OnWin()
+    {
+        Time.timeScale = 0;
+        WallSpawner.GetCurrentWallSpawnerState().Pause = true;
+        GameOverMenu.gameObject.SetActive(false);
+        PauseMenu.gameObject.SetActive(false);
+        GameWonMenu.gameObject.SetActive(true);
     }
 }
