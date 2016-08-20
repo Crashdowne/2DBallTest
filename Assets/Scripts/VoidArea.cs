@@ -13,9 +13,10 @@ public class VoidArea : MonoBehaviour {
 
     public Material blackMaterial;
     // Use this for initialization
-    void Start () {
-	
-	}
+    void Start ()
+    {
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
