@@ -10,6 +10,8 @@ public class VoidArea : MonoBehaviour {
     public bool isTop = false;
     public bool isBottom = false;
     public GameObject parent;
+    public PlayArea parentPlayArea;
+    public bool isDestroyed = false;
 
     public Material blackMaterial;
     // Use this for initialization
@@ -20,6 +22,11 @@ public class VoidArea : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if(isDestroyed)
+        {
+            return;
+        }
+
         // Once updateCount == 5 changes the material --> Delayed Start
         if(updateCount == 5) 
         {
@@ -28,26 +35,26 @@ public class VoidArea : MonoBehaviour {
             if (isBottom)
             {
                 var wall = parent.FindChild("Wallyer");
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.BottomBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.min.y);
-                //Debug.Log("New Bottom: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.BottomBar.ToString());
+                parentPlayArea.BottomBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.min.y);
+                Debug.Log("New Bottom: " + parentPlayArea.BottomBar.ToString());
             }
             else if (isTop)
             {
                 var wall = parent.FindChild("Wallyer");
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.TopBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.min.y);
-                //Debug.Log("New Top: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.TopBar.ToString());
+                parentPlayArea.TopBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.min.y);
+                Debug.Log("New Top: " + parentPlayArea.TopBar.ToString());
             }
             else if (isLeft)
             {
                 var wall = parent.FindChild("Wallyer");
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.LeftBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.max.y);
-                //Debug.Log("New Left: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.LeftBar.ToString());
+                parentPlayArea.LeftBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.max.y);
+                Debug.Log("New Left: " + parentPlayArea.LeftBar.ToString());
             }
             else if (isRight)
             {
                 var wall = parent.FindChild("Wallyer");
-                WallSpawner.GetCurrentWallSpawnerState().PlayArea.RightBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.max.y);
-                //Debug.Log("New Right: " + WallSpawner.GetCurrentWallSpawnerState().PlayArea.RightBar.ToString());
+                parentPlayArea.RightBar = new Vector2(wall.GetComponent<Renderer>().bounds.min.x, wall.GetComponent<Renderer>().bounds.max.y);
+                Debug.Log("New Right: " + parentPlayArea.RightBar.ToString());
             }
         }
         updateCount += 1;
@@ -55,24 +62,45 @@ public class VoidArea : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDestroyed)
+        {
+            return;
+        }
+
         if (other.gameObject.name.Contains("Ball"))
         {
+            isDestroyed = true;
+            parent.GetComponent<WallGrower>().TestAreaDestroyed();
             GameObject.Destroy(gameObject);
         }
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
+        if (isDestroyed)
+        {
+            return;
+        }
+
         if (other.gameObject.name.Contains("Ball"))
         {
+            isDestroyed = true;
+            parent.GetComponent<WallGrower>().TestAreaDestroyed();
             GameObject.Destroy(gameObject);
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (isDestroyed)
+        {
+            return;
+        }
+
         if (other.gameObject.name.Contains("Ball"))
         {
+            isDestroyed = true;
+            parent.GetComponent<WallGrower>().TestAreaDestroyed();
             GameObject.Destroy(gameObject);
         }
     }

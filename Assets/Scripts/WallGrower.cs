@@ -8,6 +8,10 @@ public class WallGrower : MonoBehaviour {
     public int GrowDirection = 1;
     public float GrowSpeed = 0.01f;
     public GameObject square;
+    public PlayArea parentPlayArea;
+    public GameObject TestArea1;
+    public GameObject TestArea2;
+    private int currentTestAreas = 2;
 
     //TODO make work
     public bool IsHorizontal { get { return this.transform.parent.localRotation.z == 0; } }
@@ -56,83 +60,87 @@ public class WallGrower : MonoBehaviour {
 
     public void SpawnTestAreas()
     {
-        var topBar = GameObject.FindGameObjectWithTag("TopBar");
-        var leftBar = GameObject.FindGameObjectWithTag("LeftBar");
-        var origin = new Vector3(topBar.GetComponent<Renderer>().bounds.min.x, leftBar.GetComponent<Renderer>().bounds.max.y, 0.0f);
-        var width = topBar.GetComponent<Renderer>().bounds.size.magnitude;
-        var height = leftBar.GetComponent<Renderer>().bounds.size.magnitude;
+        var topBar = parentPlayArea.TopBar;
+        var leftBar = parentPlayArea.LeftBar;
+        var origin = new Vector2(topBar.x, leftBar.y);
+        var width = parentPlayArea.Width;
+        var height = parentPlayArea.Height;
         var point = this.transform.position;
 
         if (IsHorizontal)
         {
-            Vector3 origin2 = new Vector3(origin.x, point.y, 0.0f);
+            Vector2 origin2 = new Vector2(origin.x, point.y);
             float w1 = width;
             float w2 = width;
             float h1 = origin.y - origin2.y;
             float h2 = height - h1;
 
-            Vector3 center = new Vector3(origin.x + w1 / 2, origin.y - h1 / 2, 0.0f);
-            Vector3 center2 = new Vector3(origin2.x + w2 / 2, origin2.y - h2 / 2, 0.0f);
+            Vector2 center = new Vector2(origin.x + w1 / 2, origin.y - h1 / 2);
+            Vector2 center2 = new Vector2(origin2.x + w2 / 2, origin2.y - h2 / 2);
 
-            GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
-            testArea1.transform.localScale = new Vector3(w1, h1, 1);
-            testArea1.GetComponent<VoidArea>().isTop = true;
+            TestArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
+            TestArea1.transform.localScale = new Vector3(w1, h1, 1);
+            TestArea1.GetComponent<VoidArea>().isTop = true;
+            TestArea1.GetComponent<VoidArea>().parentPlayArea = parentPlayArea;
             if (this.name.Contains("Left"))
             {
-                testArea1.GetComponent<VoidArea>().parent = this.gameObject;
+                TestArea1.GetComponent<VoidArea>().parent = this.gameObject;
             }
             else
             {
-                testArea1.GetComponent<VoidArea>().parent = FindBrother();
+                TestArea1.GetComponent<VoidArea>().parent = FindBrother();
             }
 
-            GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
-            testArea2.transform.localScale = new Vector3(w2, h2, 1);
-            testArea2.GetComponent<VoidArea>().isBottom = true;
+            TestArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
+            TestArea2.transform.localScale = new Vector3(w2, h2, 1);
+            TestArea2.GetComponent<VoidArea>().isBottom = true;
+            TestArea2.GetComponent<VoidArea>().parentPlayArea = parentPlayArea;
             if (this.name.Contains("Left"))
             {
-                testArea2.GetComponent<VoidArea>().parent = this.gameObject;
+                TestArea2.GetComponent<VoidArea>().parent = this.gameObject;
             }
             else
             {
-                testArea2.GetComponent<VoidArea>().parent = FindBrother();
+                TestArea2.GetComponent<VoidArea>().parent = FindBrother();
             }
 
         }
         // IsVertical
         else
         {
-            Vector3 origin2 = new Vector3(point.x, origin.y, 0.0f);
+            Vector2 origin2 = new Vector2(point.x, origin.y);
             float w1 = origin2.x - origin.x;
             float w2 = width - w1;
             float h1 = height;
             float h2 = height;
 
-            Vector3 center = new Vector3(origin.x + w1 / 2, origin.y - h1 / 2, 0.0f);
-            Vector3 center2 = new Vector3(origin2.x + w2 / 2, origin2.y - h2 / 2, 0.0f);
+            Vector2 center = new Vector2(origin.x + w1 / 2, origin.y - h1 / 2);
+            Vector2 center2 = new Vector2(origin2.x + w2 / 2, origin2.y - h2 / 2);
 
-            GameObject testArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
-            testArea1.transform.localScale = new Vector3(w1, h1, 1);
-            testArea1.GetComponent<VoidArea>().isLeft = true;
-            if(this.name.Contains("Left"))
-            {
-                testArea1.GetComponent<VoidArea>().parent = FindBrother();
-            }
-            else
-            {
-                testArea1.GetComponent<VoidArea>().parent = this.gameObject;
-            }
-
-            GameObject testArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
-            testArea2.transform.localScale = new Vector3(w2, h2, 1);
-            testArea2.GetComponent<VoidArea>().isRight = true;
+            TestArea1 = Instantiate(square, center, Quaternion.identity) as GameObject;
+            TestArea1.transform.localScale = new Vector3(w1, h1, 1);
+            TestArea1.GetComponent<VoidArea>().isLeft = true;
+            TestArea1.GetComponent<VoidArea>().parentPlayArea = parentPlayArea;
             if (this.name.Contains("Left"))
             {
-                testArea2.GetComponent<VoidArea>().parent = FindBrother();
+                TestArea1.GetComponent<VoidArea>().parent = FindBrother();
             }
             else
             {
-                testArea2.GetComponent<VoidArea>().parent = this.gameObject;
+                TestArea1.GetComponent<VoidArea>().parent = this.gameObject;
+            }
+
+            TestArea2 = Instantiate(square, center2, Quaternion.identity) as GameObject;
+            TestArea2.transform.localScale = new Vector3(w2, h2, 1);
+            TestArea2.GetComponent<VoidArea>().isRight = true;
+            TestArea2.GetComponent<VoidArea>().parentPlayArea = parentPlayArea;
+            if (this.name.Contains("Left"))
+            {
+                TestArea2.GetComponent<VoidArea>().parent = FindBrother();
+            }
+            else
+            {
+                TestArea2.GetComponent<VoidArea>().parent = this.gameObject;
             }
         }
     }
@@ -149,5 +157,42 @@ public class WallGrower : MonoBehaviour {
         }
 
         return null;
+    }
+
+    public void TestAreaDestroyed()
+    {
+        currentTestAreas -= 1;
+
+        if(currentTestAreas == 0)
+        {
+            GameObject splitWall = null;
+            if (currentTestAreas == 0)
+            {
+                if (IsHorizontal)
+                {
+                    if (this.name.Contains("Left"))
+                    {
+                        splitWall = this.gameObject;
+                    }
+                    else
+                    {
+                        splitWall = FindBrother();
+                    }
+                }
+                else
+                {
+                    if (this.name.Contains("Left"))
+                    {
+                        splitWall = FindBrother();
+                    }
+                    else
+                    {
+                        splitWall = this.gameObject;
+                    }
+                }
+            }
+
+            WallSpawner.GetCurrentWallSpawnerState().SplitPlayArea(parentPlayArea, splitWall.FindChild("Wallyer"), IsHorizontal);
+        }
     }
 }

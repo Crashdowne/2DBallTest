@@ -45,7 +45,7 @@ public class GameState : MonoBehaviour
         }
 
         var wallSpawner = WallSpawner.GetCurrentWallSpawnerState();
-        percentTotalCovered = (100 - Math.Ceiling((wallSpawner.PlayArea.GetArea() / wallSpawner.InitPlayArea.GetArea()) * 100));
+        percentTotalCovered = (100 - Math.Ceiling((wallSpawner.GetCurrentPlayArea() / wallSpawner.InitPlayArea.GetArea()) * 100));
         percentCovered.text = "Covered: " + percentTotalCovered.ToString() + "%";
 
         if (percentTotalCovered >= 75.0)
