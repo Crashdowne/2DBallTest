@@ -10,14 +10,12 @@ public class BallSpawner : MonoBehaviour {
     private int count = 1;
     public Text countText; 
     public GameObject prefab;
-    private int numOfBallsGenerated;
     private int randomQuadrent;
 
     void Awake()
     {
-        numOfBallsGenerated = SceneManager.GetActiveScene().buildIndex;
         // Spawns the # of balls for the # that was entered by the user
-        for (int i = 1; i <= numOfBallsGenerated; i++)
+        for (int i = 1; i <= numOfBalls; i++)
         {
             // Use different quadrents to stop balls from spawning on top of each other, or at least make it more difficult
             randomQuadrent = Random.Range(0, 2);

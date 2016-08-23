@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.UI;
 
-
-// Attached to buttons (when it works...)
 public class MenuBehaviour : MonoBehaviour
 {
     public GameObject PauseMenu;
