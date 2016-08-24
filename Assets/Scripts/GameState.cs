@@ -23,6 +23,7 @@ public class GameState : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1;
         PauseMenu.gameObject.SetActive(false);
         GameOverMenu.gameObject.SetActive(false);
         GameWonMenu.gameObject.SetActive(false);
