@@ -8,11 +8,11 @@ public class BallSpawner : MonoBehaviour {
 
     public int numOfBalls;
     private int count = 1;
-    public Text countText; 
+    public Text numBallsText; 
     public GameObject prefab;
     private int randomQuadrent;
 
-    void Awake()
+    void Start()
     {
         // Spawns the # of balls for the # that was entered by the user
         for (int i = 1; i <= numOfBalls; i++)
@@ -33,7 +33,7 @@ public class BallSpawner : MonoBehaviour {
             count = numOfBalls;
 
             // Sets the text to be displayed
-            countText.text = "Balls: " + count.ToString();
+            numBallsText.text = "Balls: " + count.ToString();
         }       
     }
 }

@@ -78,6 +78,11 @@ public class MenuBehaviour : MonoBehaviour
         SceneManager.LoadScene(scene += 1);
     }
 
+    public void HowTo()
+    {
+        SceneManager.LoadScene("HowTo");
+    }
+
     public float updateInterval = 0.5F;
     private double lastInterval;
     private int frames = 0;
