@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class SplashScreen : MonoBehaviour {
+public class Splash : MonoBehaviour {
 
 	// Use this for initialization
     void Start ()
