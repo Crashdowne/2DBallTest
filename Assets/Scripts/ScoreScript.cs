@@ -1,34 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Diagnostics;
-using System.Threading;
+using UnityEngine.UI;
+using System;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
+// Attached to Level Manager
 public class ScoreScript : MonoBehaviour {
 
-    private float score = 100f;
+    public Text timerText;
+    public Text scoreTimeText;
+    private string timeOut;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
-        // Create new stopwatch.
-        Stopwatch stopwatch = new Stopwatch();
-
-        // Begin timing.
-        stopwatch.Start();
-
-        // Do something.
-        for (int i = 0; i < 1000; i++)
-        {
-            Thread.Sleep(1);
-        }
-
-        // Stop timing.
-        stopwatch.Stop();
-
+        
     }
 
     // Update is called once per frame
-    void Update () {
-	
-	}
+    void Update ()
+    {
+        timeOut = string.Format("{0:0.##}", Time.timeSinceLevelLoad);
+        timerText.text = timeOut + " s";
+        scoreTimeText.text = "Time Taken: " + timeOut + "s";
+    }
 }
