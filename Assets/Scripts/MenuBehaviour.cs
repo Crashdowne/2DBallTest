@@ -8,6 +8,7 @@ public class MenuBehaviour : MonoBehaviour
 {
     public GameObject PauseMenu;
     public GameObject GameOverMenu;
+    public GameObject GameWonMenu;
 
     // Allows us to load different scenes through the editor
     // Passes in the scene name 
@@ -82,33 +83,4 @@ public class MenuBehaviour : MonoBehaviour
     {
         SceneManager.LoadScene("HowTo");
     }
-
-    public float updateInterval = 0.5F;
-    private double lastInterval;
-    private int frames = 0;
-    private float fps;
-    public Text FPSText;
-
-    void Start()
-    {
-        lastInterval = Time.realtimeSinceStartup;
-        frames = 0;
-    }
-    void OnGUI()
-    {
-        GUILayout.Label("" + fps.ToString("f2"));
-    }
-    void Update()
-    {
-        ++frames;
-        float timeNow = Time.realtimeSinceStartup;
-        if (timeNow > lastInterval + updateInterval)
-        {
-            fps = (float)(frames / (timeNow - lastInterval));
-            frames = 0;
-            lastInterval = timeNow;
-            FPSText.text = fps.ToString();
-        }
-    }
-
 }

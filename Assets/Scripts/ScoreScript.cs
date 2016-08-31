@@ -12,12 +12,6 @@ public class ScoreScript : MonoBehaviour {
     public Text scoreTimeText;
     private string timeOut;
 
-    // Use this for initialization
-    void Start ()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update ()
     {
