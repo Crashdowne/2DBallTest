@@ -15,7 +15,8 @@ public class ScoreScript : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        timeOut = string.Format("{0:0.##}", Time.timeSinceLevelLoad);
+        // Timer to count amount of time it takes to complete the level in seconds
+        timeOut = string.Format("{0:0. #}", Time.timeSinceLevelLoad);
         timerText.text = timeOut + " s";
         scoreTimeText.text = "Time Taken: " + timeOut + "s";
     }
